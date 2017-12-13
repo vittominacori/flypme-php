@@ -1,0 +1,29 @@
+{
+  "name": "vittominacori/flypme-php",
+  "description": "A PHP wrapper for Flyp.me API",
+  "keywords": ["flypme", "exchange", "crypto", "client"],
+  "type": "library",
+  "homepage": "https://github.com/vittominacori/flypme-php",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/vittominacori/flypme-php/issues",
+    "source": "https://github.com/vittominacori/flypme-php"
+  },
+  "authors": [
+    {
+      "name": "Vittorio Minacori",
+      "homepage": "https://github.com/vittominacori"
+    }
+  ],
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*",
+    "php": ">=7.0.0",
+    "mashape/unirest-php": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "FlypMe\\": "src/"
+    }
+  }
+}
