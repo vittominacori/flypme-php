@@ -45,13 +45,13 @@ class FlypMe
         return $this->post('order/limits');
     }
 
-    public function orderCreate($from_currency, $to_currency, $ordered_amount, $destination)
+    public function orderCreate($from_currency, $to_currency, $amount, $destination, $type = "invoiced_amount")
     {
         $body = [
             "order" => [
                 "from_currency" => $from_currency,
                 "to_currency" => $to_currency,
-                "ordered_amount" => $ordered_amount,
+                $type => $amount,
                 "destination" => $destination
             ]
         ];

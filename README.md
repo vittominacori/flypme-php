@@ -31,8 +31,10 @@ $flypme = new FlypMe();
 
 Create a new order
 
+Last param could be "invoiced_amount" or "ordered_amount"
+
 ```php
-$flypme->orderCreate("LTC", "ZEC", "0.01", "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt")
+$flypme->orderCreate("LTC", "ZEC", "0.01", "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt", "invoiced_amount")
 ```
 
 result: 
