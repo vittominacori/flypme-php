@@ -31,28 +31,92 @@ $flypme = new FlypMe();
 
 Create a new order
 
-Last param could be "invoiced_amount" or "ordered_amount"
+Last param could be "invoiced_amount" or "ordered_amount".
+
+You can optionally specify destination and refund_address on the request.
+
 
 ```php
-$flypme->orderCreate("LTC", "ZEC", "0.01", "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt", "invoiced_amount")
+$flypme->orderNew("LTC", "ZEC", "0.02", "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt", "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T", "invoiced_amount");
 ```
 
 result: 
 
 ```json
 {
-    "order": {
-        "uuid": "5df90261-6fe5-46ca-bb86-77d1415b24c0",
-        "destination": "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt",
-        "exchange_rate": "0.7327148054",
-        "ordered_amount": "0.01",
-        "invoiced_amount": "0.01473971",
-        "charged_fee": "0.0008",
-        "from_currency": "LTC",
-        "to_currency": "ZEC"
-    },
-    "expires": 1199,
-    "deposit_address": "MJwm742LPLxiKGawcSv7EWxaQwt1y8MX1P"
+  "order": {
+    "uuid": "1b5929e7-0e6c-44a6-a428-e4db856d880e",
+    "destination": "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt",
+    "exchange_rate": "0.5403268038",
+    "ordered_amount": "0.00980653",
+    "invoiced_amount": "0.02",
+    "charged_fee": "0.001",
+    "from_currency": "LTC",
+    "to_currency": "ZEC"
+  },
+  "expires": 1199
+}
+```
+
+
+#### Update
+
+Update an order
+
+Last param could be "invoiced_amount" or "ordered_amount".
+
+You can optionally specify destination and refund_address on the request.
+
+
+```php
+$flypme->orderUpdate("1b5929e7-0e6c-44a6-a428-e4db856d880e", "LTC", "ZEC", "0.03", "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt", "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T", "invoiced_amount");
+```
+
+result: 
+
+```json
+{
+  "order": {
+    "uuid": "1b5929e7-0e6c-44a6-a428-e4db856d880e",
+    "destination": "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt",
+    "exchange_rate": "0.5292734791",
+    "ordered_amount": "0.0148782",
+    "invoiced_amount": "0.03",
+    "charged_fee": "0.001",
+    "from_currency": "LTC",
+    "to_currency": "ZEC"
+  },
+  "expires": 1199
+}
+```
+
+#### Accept
+
+Accept an order
+
+Accept an order by uuid
+
+
+```php
+$flypme->orderAccept("1b5929e7-0e6c-44a6-a428-e4db856d880e");
+```
+
+result: 
+
+```json
+{
+  "order": {
+    "uuid": "1b5929e7-0e6c-44a6-a428-e4db856d880e",
+    "destination": "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt",
+    "exchange_rate": "0.5292734791",
+    "ordered_amount": "0.0148782",
+    "invoiced_amount": "0.03",
+    "charged_fee": "0.001",
+    "from_currency": "LTC",
+    "to_currency": "ZEC"
+  },
+  "expires": 1053,
+  "deposit_address": "MHoWWcJzNH4aWUKvrtMwpqMggRRBsvB7va"
 }
 ```
 
@@ -60,10 +124,10 @@ result:
 
 Check order status by uuid
 
-Possible statuses are: WAITING_FOR_DEPOSIT, DEPOSIT_RECEIVED, DEPOSIT_CONFIRMED, EXECUTED, REFUNDED, CANCELED and EXPIRED
+Possible statuses are: DRAFT, WAITING_FOR_DEPOSIT, DEPOSIT_RECEIVED, DEPOSIT_CONFIRMED, EXECUTED, REFUNDED, CANCELED and EXPIRED
 
 ```php
-$flypme->orderCheck("5df90261-6fe5-46ca-bb86-77d1415b24c0")
+$flypme->orderCheck("1b5929e7-0e6c-44a6-a428-e4db856d880e");
 ```
 
 result: 
@@ -74,31 +138,56 @@ result:
 }
 ```
 
+Result will also include 'txid' and 'txurl' when the order is EXECUTED:
+
+```json
+{
+    "status": "WAITING_FOR_DEPOSIT",
+    "txid": "XXXXX", 
+    "txurl": "https://etherscan.io/tx/XXX"
+}
+```
+
 #### Info
 
 Get order full info
 
 ```php
-$flypme->orderInfo("5df90261-6fe5-46ca-bb86-77d1415b24c0")
+$flypme->orderInfo("1b5929e7-0e6c-44a6-a428-e4db856d880e");
 ```
 
 result: 
 
 ```json
 {
-    "order": {
-        "uuid": "5df90261-6fe5-46ca-bb86-77d1415b24c0",
-        "destination": "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt",
-        "exchange_rate": "0.7327148054",
-        "ordered_amount": "0.01",
-        "invoiced_amount": "0.01473971",
-        "charged_fee": "0.0008",
-        "from_currency": "LTC",
-        "to_currency": "ZEC"
-    },
-    "expires": 966,
-    "status": "WAITING_FOR_DEPOSIT",
-    "deposit_address": "MJwm742LPLxiKGawcSv7EWxaQwt1y8MX1P"
+  "order": {
+    "uuid": "1b5929e7-0e6c-44a6-a428-e4db856d880e",
+    "destination": "t1SBTywpsDMKndjogkXhZZSKdVbhadt3rVt",
+    "exchange_rate": "0.5292734791",
+    "ordered_amount": "0.0148782",
+    "invoiced_amount": "0.03",
+    "charged_fee": "0.001",
+    "from_currency": "LTC",
+    "to_currency": "ZEC"
+  },
+  "expires": 961,
+  "status": "WAITING_FOR_DEPOSIT",
+  "deposit_address": "MHoWWcJzNH4aWUKvrtMwpqMggRRBsvB7va"
+}
+```
+
+Result will also include 'txid' and 'txurl' when the order is EXECUTED:
+
+```json
+{
+  "order": {
+    "uuid": "1b5929e7-0e6c-44a6-a428-e4db856d880e",
+    (...)
+  },
+  (...)
+  "deposit_address": "MHoWWcJzNH4aWUKvrtMwpqMggRRBsvB7va",
+  "txid": "XXXXX",
+  "txurl": "https://etherscan.io/tx/..."
 }
 ```
 
@@ -107,7 +196,7 @@ result:
 Cancel a pending order
 
 ```php
-$flypme->orderCancel("5df90261-6fe5-46ca-bb86-77d1415b24c0")
+$flypme->orderCancel("1b5929e7-0e6c-44a6-a428-e4db856d880e");
 ```
 
 result: 
@@ -123,7 +212,7 @@ result:
 Get exchange rates
 
 ```php
-$flypme->dataExchangeRates()
+$flypme->dataExchangeRates();
 ```
 
 result: 
@@ -145,7 +234,7 @@ Get available currencies information
 A currency needs to have both exchange and send set to true to be enabled for the accountless exchange. Confirmation time is the expected time in minutes (approximate). Other parameters are self explanatory.
 
 ```php
-$flypme->currencies()
+$flypme->currencies();
 ```
 
 result: 
@@ -188,32 +277,18 @@ result:
 
 #### Query limits
 
-Get max and min values that can be requested
+Get max and min limits in $toCurrency. To get the limits in $fromCurrency you must calculate it using the exchange rate.
 
 ```php
-$flypme->orderLimits()
+// $flypme->orderLimits($fromCurrency, $toCurrency)
+$flypme->orderLimits('BTC', 'ETH');
 ```
 
 result: 
 
 ```json
 {
-    "BTC": {
-        "max": "0.59769291",
-        "min": "0.00000598"
-    },
-    "LTC": {
-        "max": "33.75289617",
-        "min": "0.00033753"
-    },
-    (...)
-    "PIVX": {
-        "max": "912.941625",
-        "min": "0.02004067"
-    },
-    "CREA": {
-        "max": "14081.33958578",
-        "min": "0.26647032"
-    }
+  "min": "0.006",
+  "max": "7.26915022"
 }
 ```
