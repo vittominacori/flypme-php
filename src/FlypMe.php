@@ -75,7 +75,7 @@ class FlypMe
             "order" => [
                 "from_currency" => $from_currency,
                 "to_currency" => $to_currency,
-                "type" => $type
+                $type => $amount
             ]
         ];
 
@@ -107,7 +107,7 @@ class FlypMe
                 "uuid" => $uuid,
                 "from_currency" => $from_currency,
                 "to_currency" => $to_currency,
-                "type" => $type
+                $type => $amount
             ]
         ];
 
