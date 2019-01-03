@@ -60,8 +60,8 @@ class FlypMe
     }
 
     /**
-     * @param $from_currency
-     * @param $to_currency
+     * @param string $from_currency
+     * @param string $to_currency
      * @param $amount
      * @param string $destination
      * @param string $refund_address
@@ -90,9 +90,9 @@ class FlypMe
     }
 
     /**
-     * @param $uuid
-     * @param $from_currency
-     * @param $to_currency
+     * @param string $uuid
+     * @param string $from_currency
+     * @param string $to_currency
      * @param $amount
      * @param string $destination
      * @param string $refund_address
@@ -122,7 +122,7 @@ class FlypMe
     }
 
     /**
-     * @param $uuid
+     * @param string $uuid
      * @return mixed
      * @throws Exception
      */
@@ -135,7 +135,7 @@ class FlypMe
     }
 
     /**
-     * @param $uuid
+     * @param string $uuid
      * @return mixed
      * @throws Exception
      */
@@ -148,7 +148,7 @@ class FlypMe
     }
 
     /**
-     * @param $uuid
+     * @param string $uuid
      * @return mixed
      * @throws Exception
      */
@@ -161,7 +161,7 @@ class FlypMe
     }
 
     /**
-     * @param $uuid
+     * @param string $uuid
      * @return mixed
      * @throws Exception
      */
@@ -171,6 +171,21 @@ class FlypMe
             "uuid" => $uuid
         ];
         return $this->post('order/cancel', $body, 'json');
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $refund_address
+     * @return mixed
+     * @throws Exception
+     */
+    public function addRefund($uuid, $refund_address)
+    {
+        $body = [
+            "uuid" => $uuid,
+            "address" => $refund_address
+        ];
+        return $this->post('order/addrefund', $body, 'json');
     }
 
     // private methods
